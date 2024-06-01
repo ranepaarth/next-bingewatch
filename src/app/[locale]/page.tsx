@@ -1,9 +1,19 @@
 import FaqSection from "@/components/home-page/faq-section";
-import GetStarted from "@/components/home-page/get-started";
+import HeroSection from "@/components/home-page/hero-section";
 import HomeHeader from "@/components/home-page/home-header";
+import TvSection from "@/components/home-page/tv-section";
+import { unstable_setRequestLocale } from "next-intl/server";
 import React from "react";
 
-const Home = () => {
+type HomeProps = {
+  params: {
+    locale: string;
+  };
+};
+
+const Home = ({ params }: HomeProps) => {
+  unstable_setRequestLocale(params.locale);
+
   return (
     <main className="flex flex-col gap-1 bg-zinc-700 items-center w-full h-full">
       <section className="w-full relative">
@@ -11,17 +21,11 @@ const Home = () => {
           <div className="absolute bg-gradient-radial from-black/50 to-black/70 z-10 inset-0"></div>
           <div className="z-20 w-full max-w-screen-xl mx-auto flex flex-col items-center h-full">
             <HomeHeader />
-            <GetStarted />
+            <HeroSection />
           </div>
         </div>
       </section>
-      <section className="w-full flex flex-col text-center justify-center bg-black py-20 px-10 gap-6 my-1">
-        <h3 className="text-3xl font-bold">Enjoy on your TV</h3>
-        <p className="text-lg text-pretty">
-          Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray
-          players and more.
-        </p>
-      </section>
+      <TvSection />
       <FaqSection />
     </main>
   );

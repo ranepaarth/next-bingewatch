@@ -1,0 +1,38 @@
+{
+  "Home": {
+    "header": {
+      "signIn-btn": "Sign In"
+    },
+    "heroSection": {
+      "h3": "Unlimited movies, TV shows and more",
+      "p1": "Watch anywhere. Cancel anytime.",
+      "p2": "Ready to watch? Enter your email to create or restart your membership.",
+      "email-placeholder":"Email address",
+      "get-started-btn": "Get Started"
+    },
+    "tvSection": {
+      "h3": "Enjoy on your TV",
+      "p": "Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more."
+    },
+    "faqSection": {
+      "h3": "Frequently asked questions",
+      "faq": [
+        {
+          "id": 1,
+          "question": "What is Bingewatch?",
+          "answer": [
+            "Bingewatch is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries and more – on thousands of internet-connected devices.",
+            "You can watch as much as you want, whenever you want, without a single ad – all for one low monthly price. There's always something new to discover, and new TV shows and movies are added every week!"
+          ]
+        },
+        {
+          "id": 2,
+          "question": "What can I Bingewatch?",
+          "answer": [
+            "Bingewatch has an extensive library of feature films, documentaries, TV shows, anime, award-winning Bingewatch originals, and more. Watch as much as you want, anytime you want."
+          ]
+        }
+      ]
+    }
+  }
+}
