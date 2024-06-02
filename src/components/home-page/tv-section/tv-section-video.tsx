@@ -38,58 +38,56 @@ const TvSectionVideo = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex w-full max-w-[700px] items-center justify-center relative">
       <button
         onClick={handleChevronLeftClick}
-        className="p-2 hover:bg-neutral-800/70 rounded-full transition-colors duration-200 ease-in-out"
+        className="p-2 hover:bg-neutral-800/70 rounded-full transition-colors duration-200 ease-in-out absolute z-20 left-0"
       >
         <ChevronLeft className="w-8 h-8" />
       </button>
-      <div className="flex w-full max-w-[600px] items-center justify-center relative">
-        <Image
-          src={tvOverlay}
-          alt="tv"
-          width={2080}
-          height={1440}
-          quality={60}
-          className="z-10 w-[90%]"
-          priority
-        />
-        <div className="absolute w-full">
-          {videos.map(
-            (video) =>
-              active === video.id && (
-                <div
-                  key={video.id}
-                  className="flex items-center justify-center w-full flex-col"
+      <Image
+        src={tvOverlay}
+        alt="tv"
+        width={2080}
+        height={1440}
+        quality={60}
+        className="z-10 w-[90%]"
+        priority
+      />
+      <div className="absolute w-full">
+        {videos.map(
+          (video) =>
+            active === video.id && (
+              <div
+                key={video.id}
+                className="flex items-center justify-center w-full flex-col"
+              >
+                <video
+                  className="w-[75%]"
+                  autoPlay
+                  loop
+                  muted
+                  width={2080}
+                  height={1440}
+                  preload="metadata"
                 >
-                  <video
-                    className="w-[75%]"
-                    autoPlay
-                    loop
-                    muted
-                    width={2080}
-                    height={1440}
-                    preload="metadata"
-                  >
-                    <source src={video.src} className="h-full" />
-                  </video>
-                  <div className="bg-black/60 absolute inset-0 z-"></div>
-                  <Link
-                    href={video.liveLink}
-                    target={"_blank"}
-                    className="z-30 absolute font-medium text-lg hover:underline"
-                  >
-                    {video.title}
-                  </Link>
-                </div>
-              )
-          )}
-        </div>
+                  <source src={video.src} className="h-full" />
+                </video>
+                <div className="bg-black/60 absolute inset-0 z-"></div>
+                <Link
+                  href={video.liveLink}
+                  target={"_blank"}
+                  className="z-30 absolute font-medium text-lg hover:underline"
+                >
+                  {video.title}
+                </Link>
+              </div>
+            )
+        )}
       </div>
       <button
         onClick={handleChevronRightClick}
-        className="p-2 hover:bg-neutral-800/70 rounded-full transition-colors duration-200 ease-in-out"
+        className="p-2 hover:bg-neutral-800/70 rounded-full transition-colors duration-200 ease-in-out absolute z-20 right-0"
       >
         <ChevronRight className="w-8 h-8" />
       </button>

@@ -11,14 +11,23 @@ const LanguageSelect = () => {
     router.replace(`/${locale}`);
   };
   const localeActive = useLocale();
+  const localeLookUp: any = {
+    en: "English",
+    hi: "हिन्दी",
+  };
+
+  const localeToShow = localeLookUp[localeActive];
 
   return (
-    <div className="relative border-neutral-500 border bg-neutral-900/70 rounded-md flex  items-center gap-x-2 w-32">
+    <div className="relative border-neutral-500 border bg-neutral-900/70 rounded-md flex items-center gap-x-2 w-14 sm:w-32 focus-visible:outline-2 outline-offset-4">
       <Languages className="w-5 h-5 absolute left-2" strokeWidth={2.5} />
+      <div className="absolute font-semibold  w-full sm:flex justify-center hidden">
+        {localeToShow}
+      </div>
       <select
         name="language"
         id="language"
-        className="bg-transparent font-semibold appearance-none w-full text-center py-1.5 z-30 cursor-pointer"
+        className="bg-transparent appearance-none w-full text-center py-1.5 z-20 cursor-pointer text-transparent"
         value={localeActive}
         onChange={(e) => handelLocaleChange(e.target.value)}
       >
