@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React from "react";
-import GetStartedInput from "../shared/get-started-input";
+import GetStarted from "../hero-section/get-started";
 import SingleFaqQuestion from "./single-faq-question";
 
 type faqType = {
@@ -26,7 +26,7 @@ const FaqSection = () => {
           );
         })}
       </div>
-      <GetStartedInput />
+      <GetStarted />
     </section>
   );
 };
