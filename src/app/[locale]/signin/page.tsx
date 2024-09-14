@@ -1,5 +1,3 @@
-"use client";
-
 import Logo from "@/components/logo";
 import SignInForm from "@/components/signin-page/signin-form";
 import React from "react";
