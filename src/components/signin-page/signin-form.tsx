@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { FormEvent } from "react";
 import Input from "../reusable/custom-input";
@@ -15,8 +15,17 @@ const SignInForm = () => {
       <p className="text-white font-semibold text-3xl">Sign In</p>
       <div className="py-8">
         <form action="" className="flex gap-4 flex-col" onSubmit={handleSignIn}>
-          <Input label="Email or mobile number" type={"text"} autoFocus />
-          <Input label="Password" type={"password"} />
+          <Input
+            label="Email or mobile number"
+            type={"text"}
+            className={"focus-within:border-white bg-neutral-700/20"}
+            autoFocus
+          />
+          <Input
+            label="Password"
+            type={"password"}
+            className={"focus-within:border-white bg-neutral-700/20"}
+          />
           <ButtonPrimary text="Sign In" type="submit" />
         </form>
         <p className="text-center text-xl text-neutral-400 py-4">OR</p>
