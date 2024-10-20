@@ -5,11 +5,12 @@ import Input from "@/components/auth/input";
 import Logo from "@/components/logo";
 import { Link } from "@/navigation";
 import { LoginSchema } from "@/schema/zod-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import z,{ zodResolver } from "@hookform/resolvers/zod";
 import { useLocale } from "next-intl";
 import Image from "next/image";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { infer } from "zod";
 
 type SingInFormTypes = {
   email: string;
@@ -58,6 +59,7 @@ const SignInForm = () => {
                 label="Email"
                 register={register("email")}
                 error={errors.email}
+                // autoFocus={true}
               />
               <Input
                 id="password"

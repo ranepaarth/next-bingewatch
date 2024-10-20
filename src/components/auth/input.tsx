@@ -32,7 +32,6 @@ const Input: React.FC<InputProps> = ({
         className={`block rounded-md px-6 pt-6 pb-1 w-full text-base text-white bg-blue-400/15 appearance-none focus-visible:ring-0 peer ${
           error && !focus ? "border border-red-500" : "border-transparent"
         }`}
-        autoFocus={type === "email"}
         {...register}
         autoComplete="off"
         placeholder=" "
