@@ -1,5 +1,5 @@
 import {
-  createLocalizedPathnamesNavigation,
+  createSharedPathnamesNavigation,
   Pathnames,
 } from "next-intl/navigation";
 
@@ -10,7 +10,9 @@ export const pathnames = {
   "/": "/",
   "/signin": "/signin",
   "/signup": "/signup",
+  "/signup/registration": "/signup/registration",
+  "/signup/regForm": "/signup/regForm",
 } satisfies Pathnames<typeof locales>;
 
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createLocalizedPathnamesNavigation({ locales, localePrefix, pathnames });
+export const { Link, redirect, usePathname, useRouter } =
+  createSharedPathnamesNavigation({ locales, localePrefix });
