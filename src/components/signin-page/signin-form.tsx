@@ -40,7 +40,7 @@ const SignInForm = () => {
             Forgot Password?
           </Link>
         </p>
-        <p className="text-neutral-500 font-light">
+        <p className="text-neutral-500 font-light text-sm md:text-base">
           New to Bingewatch?
           <Link href={"/"} className="text-white font-semibold hover:underline">
             {" "}
