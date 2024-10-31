@@ -6,7 +6,7 @@ import React from "react";
 const Logo = () => {
   return (
     <Link
-      className="font-semibold text-2xl md:text-3xl tracking-tighter text-primary-600 w-40 relative"
+      className="font-semibold text-2xl md:text-3xl tracking-tighter text-primary-600 w-24 md:w-40 relative"
       href={"/"}
     >
       <Image

@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="pr-6 text-neutral-600"
+            className="mr-6 text-neutral-600"
           >
             {showPassword ? (
               <EyeOff className="h-5 w-5" />
