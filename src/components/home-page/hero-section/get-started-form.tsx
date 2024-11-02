@@ -42,7 +42,7 @@ const GetStartedForm = ({
   };
 
   const borderColor = () => {
-    if (errors.email) {
+    if (errors?.email) {
       return "border-red-600"; // Error state
     }
     if (isValid && isDirty) {

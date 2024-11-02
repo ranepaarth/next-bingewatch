@@ -13,15 +13,20 @@ const SignInForm = () => {
     formState: { errors, dirtyFields },
     trigger,
   } = useForm();
-  const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
+  const handleSignIn = (data: any) => {
+    console.log("SIGN IN FORM", { data });
   };
 
   return (
     <div className="bg-black/65 w-full max-w-[450px] py-8 px-5 rounded-sm">
       <p className="text-white font-semibold text-3xl">Sign In</p>
       <div className="py-8">
-        <form action="" className="flex gap-4 flex-col" onSubmit={handleSignIn}>
+        <form
+          action=""
+          className="flex gap-4 flex-col"
+          onSubmit={handleSubmit(handleSignIn)}
+        >
           <Input
             label="Email"
             type="email"

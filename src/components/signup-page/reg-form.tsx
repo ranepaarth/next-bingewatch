@@ -38,6 +38,7 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
       startTransition(() => {
         console.log("REGISTER");
         registerAction(data);
+        router.push("/signup/regForm");
       });
       return;
     }
