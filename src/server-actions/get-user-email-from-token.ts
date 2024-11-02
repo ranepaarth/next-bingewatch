@@ -5,15 +5,14 @@ import { decode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
 export interface DecodedTokenType {
-  isNewUser: string;
-  email: string;
+  isNewUser?: string;
+  email?: string;
+  isLoggedIn?: boolean;
 }
 
-const { GET_STARTED_COOKIE_NAME } = nextConstants;
-
-export const getUserEmailFromToken = async () => {
+export const getUserEmailFromToken = async (cookieName: string) => {
   const cookieStore = cookies();
-  const token = cookieStore.get(GET_STARTED_COOKIE_NAME);
+  const token = cookieStore.get(cookieName);
   const secret = nextConstants.AUTH_SECRET;
 
   const decodedToken = (await decode({

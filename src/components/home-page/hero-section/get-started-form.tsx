@@ -1,7 +1,9 @@
 "use client";
 
+import NextButton from "@/components/signup-page/next-button";
 import { getStartedAction } from "@/server-actions/get-started-action";
 import { ChevronRight, CirclePlus, Loader2 } from "lucide-react";
+import { useRouter } from "@/navigation";
 import React, { useTransition } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -9,12 +11,14 @@ type GetStartedFormTypes = {
   placeholder: string;
   buttonLabel: string;
   email: string;
+  isLoggedIn: boolean;
 };
 
 const GetStartedForm = ({
   placeholder,
   buttonLabel,
   email,
+  isLoggedIn,
 }: GetStartedFormTypes) => {
   const [loading, startTransition] = useTransition();
   const {
@@ -28,6 +32,7 @@ const GetStartedForm = ({
       email,
     },
   });
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     console.log(data);
@@ -47,6 +52,10 @@ const GetStartedForm = ({
   };
 
   console.log(errors, "useForm validation errors");
+
+  if (isLoggedIn) {
+    return <NextButton loading={false} className="capitalize bg-primary-500 py-3 px-6 text-xl font-medium rounded-full hover:bg-primary-700 transition-colors ease-in-out" onClick={()=>router.push('/signup/planform')}>Finish Sign-up</NextButton>;
+  }
 
   return (
     <form

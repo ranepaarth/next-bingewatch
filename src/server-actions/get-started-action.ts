@@ -5,13 +5,12 @@ import { redirect } from "@/navigation";
 import { encode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
-const { API_URL, GET_STARTED_COOKIE_NAME } = nextConstants;
+const { API_URL, BINGEWATCH_SECURE_COOKIE, AUTH_SECRET } = nextConstants;
 
 export async function getStartedAction(data: { email: string }) {
-  // const email = data.get("email");
   const { email } = data;
   const cookieStore = await cookies();
-  const secret = process.env.AUTH_SECRET as string;
+  const secret = AUTH_SECRET;
   if (!email) {
     return;
   }
@@ -26,23 +25,23 @@ export async function getStartedAction(data: { email: string }) {
   const result = await res.json();
 
   if (result.data) {
-    console.log({ result }, "inside If getS");
+    console.log({ result }, "inside If getStartedAction");
     const token = await encode({
       secret,
-      token: { email, isNewUser: false },
+      token: { email: email ?? "", isNewUser: false },
       salt: "10",
     });
-    cookieStore.set(GET_STARTED_COOKIE_NAME, token);
+    cookieStore.set(BINGEWATCH_SECURE_COOKIE, token);
     redirect("/signup/regForm");
     return;
   }
   const token = await encode({
     secret,
-    token: { email, isNewUser: true },
+    token: { email: email ?? "", isNewUser: true },
     salt: "10",
   });
 
-  const cookie = cookieStore.set(GET_STARTED_COOKIE_NAME, token);
+  const cookie = cookieStore.set(BINGEWATCH_SECURE_COOKIE, token);
 
   redirect("/signup/regForm");
   console.log("-------------");
