@@ -4,6 +4,8 @@ import { redirect } from "@/navigation";
 
 const CatchAllLocaleRoute = () => {
   redirect("/");
+
+  return <></>
 };
 
 export default CatchAllLocaleRoute;
