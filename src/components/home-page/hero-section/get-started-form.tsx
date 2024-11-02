@@ -1,78 +1,112 @@
 "use client";
 
-import { usePathname, useRouter } from "@/navigation";
-import { getStarted } from "@/server-actions/get-started-action";
-import { ChevronRight } from "lucide-react";
-import React, { useState, useTransition } from "react";
+import NextButton from "@/components/signup-page/next-button";
+import { getStartedAction } from "@/server-actions/get-started-action";
+import { ChevronRight, CirclePlus, Loader2 } from "lucide-react";
+import { useRouter } from "@/navigation";
+import React, { useTransition } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type GetStartedFormTypes = {
+  placeholder: string;
+  buttonLabel: string;
+  email: string;
+  isLoggedIn: boolean;
+};
 
 const GetStartedForm = ({
   placeholder,
   buttonLabel,
-}: {
-  placeholder: string;
-  buttonLabel: string;
-}) => {
-  const router = useRouter();
-  const pathname = usePathname().split("/")[1];
-  const [email, setEmail] = useState<string>("");
-  const [isLoading, startTransition] = useTransition();
+  email,
+  isLoggedIn,
+}: GetStartedFormTypes) => {
+  const [loading, startTransition] = useTransition();
+  const {
+    register,
+    formState: { errors, isDirty, isValid },
+    handleSubmit,
+    trigger,
+  } = useForm<FormData>({
+    reValidateMode: "onChange",
+    defaultValues: {
+      email,
+    },
+  });
+  const router = useRouter()
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    // startTransition(() => {
-    //   const response = getStarted({ email });
-    //   console.log("RESPONSE",{ response });
-    // });
-
-    try {
-      const response = await fetch("http://localhost:8000/api/get-started", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-  
-      // Check if the response is ok (status in the range 200-299)
-      if (!response.ok) {
-        // If not ok, throw an error
-        const errorMessage = await response.text(); // Retrieve the error message
-        throw new Error(`Error: ${response.status} - ${errorMessage}`);
-      }
-  
-      // Parse the JSON response
-      const res = await response.json();
-  
-      console.log({ res });
-  
-      return res;
-    } catch (error:any) {
-      console.error("Fetch error:", error);
-      // Handle the error appropriately, e.g., return a default value or show a user-friendly message
-      return { error: error.message };
-    }
+  const onSubmit: SubmitHandler<FormData> = async (data: any) => {
+    console.log(data);
+    startTransition(async () => {
+      await getStartedAction(data);
+    });
   };
+
+  const borderColor = () => {
+    if (errors.email) {
+      return "border-red-600"; // Error state
+    }
+    if (isValid && isDirty) {
+      return "border-green-600"; // Valid state after submission or change
+    }
+    return "border-neutral-600"; // Initial state
+  };
+
+  console.log(errors, "useForm validation errors");
+
+  if (isLoggedIn) {
+    return <NextButton loading={false} className="capitalize bg-primary-500 py-3 px-6 text-xl font-medium rounded-full hover:bg-primary-700 transition-colors ease-in-out" onClick={()=>router.push('/signup/planform')}>Finish Sign-up</NextButton>;
+  }
 
   return (
     <form
-      className="flex flex-col items-center gap-6 sm:gap-2 sm:flex-row justify-center"
-      onSubmit={handleSubmit}
+      className="flex flex-col items-start gap-2 md:flex-row justify-center w-screen max-w-[700px] md:w-[650px]"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <input
-        type="text"
-        className="h-12 rounded-md bg-blue-300/20 px-4 border border-neutral-600 min-w-[400px] max-w-[500px] flex-grow text-sm"
-        placeholder={placeholder}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="flex flex-col items-start md:w-3/4 w-2/3">
+        <input
+          type="text"
+          className={`w-full h-12 rounded-sm bg-neutral-900/85 px-4 border ${borderColor()} flex-grow text-sm outline-offset-2`}
+          placeholder={placeholder}
+          {...register("email", {
+            required: "Email is required",
+            minLength: {
+              value: 5,
+              message: "Email is required",
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Please enter a valid email address",
+            },
+            onBlur: () => trigger(),
+            onChange: () => trigger(),
+            shouldUnregister: true,
+            value: email,
+          })}
+          autoComplete="off"
+        />
+        {errors?.email && (
+          <p className="text-sm text-red-600 flex gap-1 items-center p-1">
+            <CirclePlus className="rotate-45 w-4 h-4" />
+            {errors?.email?.message}
+          </p>
+        )}
+      </div>
+
       <button
-        className="bg-primary-600 text-2xl font-bold rounded-md flex py-2 px-4 hover:bg-primary-700  transition-colors duration-200 ease-in-out  justify-center items-center text-nowrap"
+        className="h-12 bg-primary-600 text-2xl font-bold rounded-md py-2 px-4 hover:bg-primary-700  transition-colors duration-200 ease-in-out text-nowrap disabled:bg-primary-500/50 relative md:w-1/4 w-[12.5rem]"
         type="submit"
-        // onClick={() => {
-        //   router.push("/signup/registration", { locale: pathname });
-        // }}
+        disabled={loading}
       >
-        {buttonLabel}
-        <ChevronRight className="w-7 h-7 ml-2" />
+        {loading ? (
+          <span className={`${"z-10 flex items-center justify-center"}`}>
+            <Loader2 className={`animate-spin w-6 h-6`} />
+          </span>
+        ) : (
+          <span className={`flex items-center ${loading ? "-z-20" : ""}`}>
+            {buttonLabel}
+            <ChevronRight className="w-7 h-7 ml-2" />
+          </span>
+        )}
       </button>
     </form>
   );

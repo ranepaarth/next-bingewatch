@@ -21,7 +21,7 @@ const videos = [
   },
   {
     id: 3,
-    title: "next-tweetx",
+    title: "react-tweetx",
     src: "https://res.cloudinary.com/dxfnfzh4q/video/upload/v1717275939/github/next-tweetx-react/zsjby6ogsnn0vcvqor4m.mp4",
     liveLink: "https://tweetx-deploy.vercel.app/",
   },

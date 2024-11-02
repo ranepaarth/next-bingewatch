@@ -26,7 +26,9 @@ const FaqSection = () => {
           );
         })}
       </div>
-      <GetStarted />
+      <div className="flex items-center justify-center">
+        <GetStarted />
+      </div>
     </section>
   );
 };

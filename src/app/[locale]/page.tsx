@@ -20,8 +20,8 @@ const Home = ({ params }: HomeProps) => {
     <div className="flex flex-col gap-1 bg-zinc-700 items-center">
       <main className="flex flex-col gap-1 bg-zinc-700 items-center w-full h-full">
         <section className="w-full relative">
-          <div className="relative w-full bg-[url(/images/hero-image.jpg)] h-[calc(100vh-170px)] sm:h-[calc(100vh-150px)] lg:h-dvh bg-cover bg-no-repeat">
-            <div className="absolute bg-gradient-radial from-black/50 to-black/70 z-10 inset-0"></div>
+          <div className="relative w-full bg-[url(/images/hero-image.jpg)] h-[calc(100vh-100px)] sm:h-[calc(100vh-150px)] lg:h-dvh bg-cover bg-no-repeat">
+            <div className="absolute bg-gradient-radial from-black/60 to-black/90 z-10 inset-0"></div>
             <div className="z-20 w-full max-w-screen-xl mx-auto flex flex-col items-center h-full">
               <HomeHeader />
               <HeroSection />
