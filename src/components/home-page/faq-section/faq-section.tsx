@@ -9,7 +9,9 @@ type faqType = {
   answer: string[];
 };
 
-const FaqSection = () => {
+interface FaqSectionType extends GetStartedData {}
+
+const FaqSection = ({ email, isLoggedIn }: FaqSectionType) => {
   const t = useTranslations("Home.faqSection");
 
   return (
@@ -26,7 +28,9 @@ const FaqSection = () => {
           );
         })}
       </div>
-      <GetStarted />
+      <div className="flex items-center justify-center">
+        <GetStarted email={email} isLoggedIn={isLoggedIn} />
+      </div>
     </section>
   );
 };
