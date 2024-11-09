@@ -10,11 +10,9 @@ import Input from "../reusable/custom-input";
 import NextButton from "./next-button";
 import StepCount from "./step-count";
 
-type RegFormTypes = {
-  email: string;
+interface RegFormTypes extends GetStartedData {
   isNewUser: boolean;
-  isLoggedIn?: boolean;
-};
+}
 
 const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
   const {
@@ -35,19 +33,23 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
     console.log(data);
     // return
     if (isNewUser) {
-      startTransition(() => {
+      startTransition(async () => {
         console.log("REGISTER");
-        registerAction(data);
-        router.push("/signup/regForm");
+        const result = await registerAction(data);
+        if (result?.success) {
+          router.push("/signup/verifyemail");
+        }
       });
       return;
     }
 
-    startTransition(() => {
+    startTransition(async () => {
       console.log("LOGIN");
-      loginAction({ email, password: data?.password });
-      router.push("/signup/verifyemail");
-      // console.log(result);
+      const result = await loginAction({ email, password: data?.password });
+      if (result?.success) {
+        router.push("/signup/verifyemail");
+      }
+      console.log("redirecting to verifyemail");
       return;
     });
   };
