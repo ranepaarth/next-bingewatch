@@ -83,7 +83,7 @@ export async function middleware(request: NextRequest) {
       httpOnly: true,
       expires: new Date(0),
       path: "/", // Make sure the path matches where the cookie was originally set
-      domain: "localhost",
+      domain: process.env.DOMAIN,
     });
 
     console.log("---------------");
