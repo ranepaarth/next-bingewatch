@@ -1,18 +1,15 @@
 "use client";
 
-import NextButton from "@/components/signup-page/next-button";
+import { Link, useRouter } from "@/navigation";
 import { getStartedAction } from "@/server-actions/get-started-action";
 import { ChevronRight, CirclePlus, Loader2 } from "lucide-react";
-import { useRouter } from "@/navigation";
 import React, { useTransition } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-type GetStartedFormTypes = {
+interface GetStartedFormTypes extends GetStartedData {
   placeholder: string;
   buttonLabel: string;
-  email: string;
-  isLoggedIn: boolean;
-};
+}
 
 const GetStartedForm = ({
   placeholder,
@@ -32,12 +29,15 @@ const GetStartedForm = ({
       email,
     },
   });
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     console.log(data);
     startTransition(async () => {
-      await getStartedAction(data);
+      const result = await getStartedAction(data);
+      if (result?.success) {
+        router.push("/signup/regForm");
+      }
     });
   };
 
@@ -54,7 +54,15 @@ const GetStartedForm = ({
   console.log(errors, "useForm validation errors");
 
   if (isLoggedIn) {
-    return <NextButton loading={false} className="capitalize bg-primary-500 py-3 px-6 text-xl font-medium rounded-full hover:bg-primary-700 transition-colors ease-in-out" onClick={()=>router.push('/signup/planform')}>Finish Sign-up</NextButton>;
+    return (
+      <Link
+        href={isLoggedIn ? "/signup/planform" : "/"}
+        className="capitalize bg-primary-500 py-3 px-6 text-xl font-medium rounded-full hover:bg-primary-700 transition-colors ease-in-out"
+        onClick={() => router.push("/signup/planform")}
+      >
+        Finish Sign-up
+      </Link>
+    );
   }
 
   return (

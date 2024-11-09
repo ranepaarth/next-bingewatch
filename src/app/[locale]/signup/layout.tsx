@@ -1,7 +1,11 @@
 import Logo from "@/components/logo";
+import LogoutButton from "@/components/signup-page/logout-button";
 import { nextConstants } from "@/constants";
 import { Link } from "@/navigation";
-import { getUserEmailFromToken } from "@/server-actions/get-user-email-from-token";
+import {
+  DecodedTokenType,
+  getUserInfoFromToken,
+} from "@/server-actions/get-user-info-from-token";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,23 +20,20 @@ type SignUpLayoutProps = {
   };
 };
 
+export const dynamic = "force-dynamic";
 const { BINGEWATCH_SECURE_COOKIE } = nextConstants;
 export default async function SignUpLayout({
   children,
   params,
 }: SignUpLayoutProps) {
-  const decodedToken = await getUserEmailFromToken(BINGEWATCH_SECURE_COOKIE);
+  const decodedToken = (await getUserInfoFromToken(
+    BINGEWATCH_SECURE_COOKIE
+  )) as DecodedTokenType;
   return (
     <section className="bg-white w-full min-h-screen flex flex-col">
       <div className="px-4 md:px-20 py-4 border border-b flex items-center justify-between">
         <Logo />
-
-        <Link
-          href={"/signin"}
-          className="text-neutral-800 font-bold md:text-xl text-sm"
-        >
-          {decodedToken?.isLoggedIn ? "Sign out" : "Sign In"}
-        </Link>
+        <LogoutButton isLoggedIn={decodedToken?.isLoggedIn} />
       </div>
       <div className="w-full flex-grow flex flex-col items-center mt-20  text-neutral-800 px-8">
         {children}

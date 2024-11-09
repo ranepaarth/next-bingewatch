@@ -7,3 +7,8 @@ interface LoginFormData {
   email: string;
   password: string;
 }
+
+interface GetStartedData {
+  email: string;
+  isLoggedIn: boolean;
+}

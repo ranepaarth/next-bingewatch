@@ -1,15 +1,21 @@
 import { nextConstants } from "@/constants";
-import { getUserEmailFromToken } from "@/server-actions/get-user-email-from-token";
+import {
+  DecodedTokenType,
+  getUserInfoFromToken,
+} from "@/server-actions/get-user-info-from-token";
 import React from "react";
 
+export const dynamic = "force-dynamic";
 const { BINGEWATCH_SECURE_COOKIE } = nextConstants;
 const VerifyEmailPage = async () => {
-  const decodedToken = await getUserEmailFromToken(BINGEWATCH_SECURE_COOKIE);
+  const decodedToken = (await getUserInfoFromToken(
+    BINGEWATCH_SECURE_COOKIE
+  )) as DecodedTokenType;
 
   return (
     <div>
-      <p>{decodedToken?.email}</p>
-      <p>{`${decodedToken?.isLoggedIn}`}</p>
+      <p>email: {decodedToken?.email}</p>
+      <p>isLoggedIn: {`${decodedToken?.isLoggedIn}`}</p>
     </div>
   );
 };
