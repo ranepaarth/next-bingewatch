@@ -67,7 +67,7 @@ const GetStartedForm = ({
 
   return (
     <form
-      className="flex flex-col items-start gap-2 md:flex-row justify-center w-screen max-w-[700px] md:w-[650px]"
+      className="flex flex-col items-center md:items-start gap-2 md:flex-row justify-center w-screen max-w-[700px] md:w-[650px]"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col items-start md:w-3/4 w-2/3">
