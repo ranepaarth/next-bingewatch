@@ -75,7 +75,6 @@ export async function middleware(request: NextRequest) {
   }
 
   if (pathname.endsWith("logout") && decodedToken?.isLoggedIn) {
-    const nextResponse = NextResponse.redirect(new URL("/", request.url));
     nextResponse.cookies.set(BINGEWATCH_SECURE_COOKIE, "", {
       maxAge: -1,
       secure: process.env.NODE_ENV === "production" ? true : false,
