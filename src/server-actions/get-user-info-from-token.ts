@@ -20,7 +20,7 @@ export const getUserInfoFromToken = async (cookieName: string) => {
 
     if (!token) {
       console.error("No token found in cookies");
-      return { success: true }; // Or handle it according to your logic
+      return { success: false }; // Or handle it according to your logic
     }
 
     const decodedToken = (await decode({
@@ -31,12 +31,12 @@ export const getUserInfoFromToken = async (cookieName: string) => {
 
     if (!decodedToken) {
       console.error("Decoded token is null");
-      return { success: true };
+      return { success: false };
     }
 
     return decodedToken;
   } catch (error) {
     console.error("Error getting user email from token:", error);
-    return { success: true };
+    return { success: false };
   }
 };

@@ -21,8 +21,9 @@ export const loginAction = async (data: LoginFormData) => {
       credentials: "include",
     });
 
+    const result = await res.json();
     if (res.ok) {
-      const result = await res.json();
+      console.log(result);
       const token = await encode({
         secret: AUTH_SECRET,
         token: {
@@ -45,9 +46,11 @@ export const loginAction = async (data: LoginFormData) => {
       console.log("---------------");
       console.log("Res getUser: 17", { result });
       console.log("---------------");
-      redirect("/signup/verifyemail");
       return { success: true };
     }
+    console.log("---------------------LOGIN RESPONSE-------------------------");
+    console.log({ result });
+    console.log("---------------------LOGIN RESPONSE-------------------------");
     return { success: false };
   } catch (error) {
     console.log("---------------");
