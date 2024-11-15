@@ -1,21 +1,25 @@
 "use server";
 
+import { nextConstants } from "@/constants";
 import { cookies } from "next/headers";
-
+const { NEXT_APP_URL } = nextConstants;
 export const logoutAction = async (cookieName: string) => {
   try {
-    const cookieStore = await cookies();
-
-    cookieStore.set(cookieName, "",  {
-      maxAge: -1,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "lax",
-      httpOnly: true,
-      expires: new Date(0),
-      path: "/", // Make sure the path matches where the cookie was originally set
-      domain: "localhost",
+    const response = await fetch(`${NEXT_APP_URL}/api/logout`, {
+      headers: {
+        "Content-type": "application/json",
+      },
+      credentials: "same-origin",
+      method: "POST",
     });
-    return { success: true };
+    const data = await response.json();
+    console.log({ data });
+
+    if (response.ok) {
+      console.log({ response });
+      return { success: true };
+    }
+    return { success: false };
   } catch (error) {
     console.log("logout action catch ERROR: ", error);
     return { success: false };

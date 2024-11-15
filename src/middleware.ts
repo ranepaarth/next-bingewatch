@@ -74,26 +74,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (pathname.endsWith("logout") && decodedToken?.isLoggedIn) {
-    const nextResponse = NextResponse.redirect(new URL("/", request.url));
-    nextResponse.cookies.set(BINGEWATCH_SECURE_COOKIE, "", {
-      maxAge: -1,
-      secure: process.env.NODE_ENV === "production" ? true : false,
-      sameSite: "lax",
-      httpOnly: true,
-      expires: new Date(0),
-      path: "/", // Make sure the path matches where the cookie was originally set
-      domain: process.env.DOMAIN,
-    });
-
-    console.log("---------------");
-    console.log("LOGOUT", {
-      cookieName: BINGEWATCH_SECURE_COOKIE,
-    });
-    console.log("---------------");
-
-    return nextResponse;
-  }
   console.log("---------------");
   console.log("MIDDLEWARE 85", {
     pathname,
