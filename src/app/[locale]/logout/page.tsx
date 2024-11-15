@@ -14,7 +14,7 @@ const LogoutPage = () => {
         headers: {
           "Content-type": "application/json",
         },
-        credentials: "same-origin",
+        credentials: "include",
         method: "POST",
       });
 
