@@ -9,9 +9,11 @@ export async function POST(request: NextRequest) {
 
     // Create the response object
     const response = NextResponse.json(
-      { status:true, message: "Logged out successfully" },
+      { status: true, message: "Logged out successfully" },
       { status: 200 }
     );
+
+    console.log("DOMAIN", { DOMAIN: process.env.DOMAIN });
 
     // Delete the cookie by setting its maxAge to -1 and expires to the past
     response.cookies.set(BINGEWATCH_SECURE_COOKIE, "", {
@@ -27,7 +29,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.log("logout action catch ERROR: ", error);
     return NextResponse.json(
-      { status:false,message: "Error while Logout" },
+      { status: false, message: "Error while Logout" },
       { status: 400 }
     );
   }
