@@ -5,7 +5,8 @@ import { redirect } from "@/navigation";
 import { encode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
-const { API_URL, BINGEWATCH_SECURE_COOKIE, AUTH_SECRET } = nextConstants;
+const { API_URL, BINGEWATCH_SECURE_COOKIE, AUTH_SECRET, DOMAIN } =
+  nextConstants;
 
 export async function getStartedAction(data: { email: string }) {
   try {
@@ -32,7 +33,14 @@ export async function getStartedAction(data: { email: string }) {
         token: { email: email ?? "", isNewUser: false },
         salt: "10",
       });
-      cookieStore.set(BINGEWATCH_SECURE_COOKIE, token);
+      cookieStore.set(BINGEWATCH_SECURE_COOKIE, token, {
+        secure: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: "lax",
+        httpOnly: true,
+        expires: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000,
+        domain: DOMAIN,
+      });
 
       return { success: true };
     }
@@ -48,6 +56,7 @@ export async function getStartedAction(data: { email: string }) {
       httpOnly: true,
       expires: 24 * 60 * 60 * 1000,
       maxAge: 24 * 60 * 60 * 1000,
+      domain: DOMAIN,
     });
 
     // redirect("/signup/regForm");
@@ -59,6 +68,6 @@ export async function getStartedAction(data: { email: string }) {
     console.log("-------------");
     console.log("Get started action error: ", error);
     console.log("-------------");
-    return {success:false};
+    return { success: false };
   }
 }

@@ -5,7 +5,8 @@ import { redirect } from "@/navigation";
 import { encode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
-const { API_URL, AUTH_SECRET, BINGEWATCH_SECURE_COOKIE } = nextConstants;
+const { API_URL, AUTH_SECRET, BINGEWATCH_SECURE_COOKIE, DOMAIN } =
+  nextConstants;
 export const registerAction = async (data: LoginFormData) => {
   const { email, password } = data;
 
@@ -46,6 +47,7 @@ export const registerAction = async (data: LoginFormData) => {
         httpOnly: true,
         expires: 24 * 60 * 60 * 1000,
         maxAge: 24 * 60 * 60 * 1000,
+        domain: DOMAIN,
       });
 
       console.log("---------------");
