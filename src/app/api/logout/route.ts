@@ -27,7 +27,10 @@ export async function POST(request: NextRequest) {
       domain: process.env.DOMAIN || undefined,
     });
 
-    console.log("cookie after logging out"cookieStore.get(BINGEWATCH_SECURE_COOKIE));
+    console.log(
+      "cookie after logging out",
+      cookieStore.get(BINGEWATCH_SECURE_COOKIE)
+    );
 
     return NextResponse.json(
       { status: true, message: "Logged out successfully" },
