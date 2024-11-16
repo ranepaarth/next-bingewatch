@@ -1,15 +1,48 @@
+"use client";
+
 import { nextConstants } from "@/constants";
-import { redirect } from "@/navigation";
-import { logoutAction } from "@/server-actions/logout-action";
-import React from "react";
+import { useRouter } from "@/navigation";
+import React, { useEffect } from "react";
 
-const { BINGEWATCH_SECURE_COOKIE } = nextConstants;
-
+const { NEXT_APP_URL } = nextConstants;
 export const dynamic = "force-dynamic";
-const LogoutPage = async () => {
-  const result = await logoutAction(BINGEWATCH_SECURE_COOKIE);
-  
-  return <div>Logout</div>;
+const LogoutPage = () => {
+  const router = useRouter();
+  const logoutFunc = async () => {
+    try {
+      const response = await fetch(`${NEXT_APP_URL}/api/logout`, {
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+        method: "POST",
+      });
+
+      if (response.ok) {
+      }
+      return;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    logoutFunc();
+    console.log("before interval");
+    const timeoutId = setTimeout(() => {
+      router.replace("/");
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+  return (
+    <div>
+      You will be redirected in: <p>5 seconds</p>
+      <button onClick={() => router.replace("/")}>Redirect now</button>
+    </div>
+  );
 };
 
 export default LogoutPage;

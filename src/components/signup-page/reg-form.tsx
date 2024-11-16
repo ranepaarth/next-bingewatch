@@ -19,10 +19,11 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
     register,
     handleSubmit,
     formState: { errors, dirtyFields },
+    resetField,
     trigger,
   } = useForm();
   const [loading, startTransition] = useTransition();
-  const userExistRef = useRef<boolean>(null);
+  const userExistRef = useRef<boolean>(false);
   const router = useRouter();
 
   // console.log(errors, "REGFORM");
@@ -38,7 +39,11 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
         const result = await registerAction(data);
         if (result?.success) {
           router.push("/signup/verifyemail");
+          userExistRef.current = false;
+          return;
         }
+        userExistRef.current = true;
+        resetField("password");
       });
       return;
     }
