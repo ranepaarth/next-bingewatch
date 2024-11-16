@@ -10,7 +10,7 @@ type LogoutButtonTypes = {
 const LogoutButton: FC<LogoutButtonTypes> = ({ isLoggedIn }) => {
   const router = useRouter();
   const handleLogoutButtonCLick = () => {
-    isLoggedIn ? router.replace("/logout") : router.replace("/signin");
+    isLoggedIn ? router.push("/logout") : router.push("/signin");
   };
   return (
     <button
