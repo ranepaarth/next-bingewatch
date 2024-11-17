@@ -38,7 +38,7 @@ const Home = async ({ params }: HomeProps) => {
           <div className="relative w-full bg-[url(/images/hero-image.jpg)] h-[calc(100vh-100px)] sm:h-[calc(100vh-150px)] lg:h-dvh bg-cover bg-no-repeat">
             <div className="absolute bg-gradient-radial from-black/60 to-black/90 z-10 inset-0"></div>
             <div className="z-20 w-full max-w-screen-xl mx-auto flex flex-col items-center h-full">
-              <HomeHeader />
+              <HomeHeader isLoggedIn={decodedToken?.isLoggedIn as boolean} />
               <HeroSection
                 email={decodedToken?.email as string}
                 isLoggedIn={decodedToken?.isLoggedIn as boolean}

@@ -30,17 +30,24 @@ const LogoutPage = () => {
     logoutFunc();
     console.log("before interval");
     const timeoutId = setTimeout(() => {
-      router.replace("/");
+      router.push("/");
+      router.refresh();
     }, 5000);
 
     return () => {
       clearTimeout(timeoutId);
     };
   }, []);
+
+  const handleRedirectButtonClick = () => {
+    router.push("/");
+    router.refresh();
+  };
+
   return (
     <div>
       You will be redirected in: <p>5 seconds</p>
-      <button onClick={() => router.replace("/")}>Redirect now</button>
+      <button onClick={handleRedirectButtonClick}>Redirect now</button>
     </div>
   );
 };
