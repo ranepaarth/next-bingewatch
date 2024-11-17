@@ -1,3 +1,4 @@
+import VerifyEmailComponent from "@/components/verifyEmail/verify-email";
 import { nextConstants } from "@/constants";
 import {
   DecodedTokenType,
@@ -12,12 +13,7 @@ const VerifyEmailPage = async () => {
     BINGEWATCH_SECURE_COOKIE
   )) as DecodedTokenType;
 
-  return (
-    <div>
-      <p>email: {decodedToken?.email}</p>
-      <p>isLoggedIn: {`${decodedToken?.isLoggedIn}`}</p>
-    </div>
-  );
+  return <VerifyEmailComponent email={decodedToken.email as string} />;
 };
 
 export default VerifyEmailPage;
