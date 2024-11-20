@@ -8,6 +8,7 @@ export interface DecodedTokenType {
   isNewUser?: string;
   email?: string;
   isLoggedIn?: boolean;
+  token?: string;
 }
 
 export const getUserInfoFromToken = async (cookieName: string) => {
