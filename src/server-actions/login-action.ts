@@ -25,12 +25,13 @@ export const loginAction = async (data: LoginFormData) => {
     const result = await res.json();
     if (res.ok) {
       console.log(result);
+      const data = result?.data;
       const token = await encode({
         secret: AUTH_SECRET,
         token: {
-          email: result.user.email,
-          id: result.user.id,
-          token: result.token,
+          email: data.user.email,
+          id: data.user.id,
+          token: data.token,
           isNewUser: false,
           isLoggedIn: true,
         },
