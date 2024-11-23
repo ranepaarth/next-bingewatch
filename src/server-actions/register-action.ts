@@ -4,7 +4,7 @@ import { nextConstants } from "@/constants";
 import { encode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
-const { API_URL, AUTH_SECRET, BINGEWATCH_SECURE_COOKIE, DOMAIN, } =
+const { API_URL, AUTH_SECRET, BINGEWATCH_SECURE_COOKIE, DOMAIN } =
   nextConstants;
 export const registerAction = async (data: LoginFormData) => {
   const { email, password } = data;
@@ -22,7 +22,7 @@ export const registerAction = async (data: LoginFormData) => {
     if (!res.ok && res.status === 422) {
       
       const token = await encode({
-        secret:AUTH_SECRET,
+        secret: AUTH_SECRET,
         token: { email: email ?? "", isNewUser: true },
         salt: "10",
       });
@@ -40,12 +40,13 @@ export const registerAction = async (data: LoginFormData) => {
     if (res.ok) {
       const cookieStore = await cookies();
       const result = await res.json();
+      const data = result.data;
       const token = await encode({
         secret: AUTH_SECRET,
         token: {
-          email: result.user.email,
-          id: result.user.id,
-          token: result.token,
+          email: data.user.email,
+          id: data.user.id,
+          token: data.token,
           isNewUser: false,
           isLoggedIn: true,
         },
