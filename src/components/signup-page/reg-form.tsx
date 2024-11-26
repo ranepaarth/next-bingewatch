@@ -51,9 +51,11 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
     startTransition(async () => {
       console.log("LOGIN");
       const result = await loginAction({ email, password: data?.password });
-      if (result?.success) {
-        router.push("/signup/verifyemail");
+      if (!result.success) return;
+      if (!result?.emailVerified) {
+        return router.push("/signup/verifyemail");
       }
+      router.push("/signup/planform");
       console.log("redirecting to verifyemail");
       return;
     });
