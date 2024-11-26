@@ -1,7 +1,6 @@
 "use server";
 
 import { nextConstants } from "@/constants";
-import { redirect } from "@/navigation";
 import { encode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
@@ -49,7 +48,7 @@ export const loginAction = async (data: LoginFormData) => {
       console.log("---------------");
       console.log("Res getUser: 17", { result });
       console.log("---------------");
-      return { success: true };
+      return { success: true, emailVerified: data.user.email_verified_at };
     }
     console.log("---------------------LOGIN RESPONSE-------------------------");
     console.log({ result });
