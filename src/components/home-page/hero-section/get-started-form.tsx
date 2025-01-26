@@ -35,7 +35,10 @@ const GetStartedForm = ({
     console.log(data);
     startTransition(async () => {
       const result = await getStartedAction(data);
-      if (result?.success) {
+      const isProfileComplete = result?.user?.is_profile_complete;
+      if (isProfileComplete) {
+        router.push("/signin");
+      } else {
         router.push("/signup/regForm");
       }
     });
