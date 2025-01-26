@@ -53,10 +53,15 @@ const RegForm = ({ email, isNewUser, isLoggedIn }: RegFormTypes) => {
       const result = await loginAction({ email, password: data?.password });
       if (!result.success) return;
       if (!result?.emailVerified) {
+        console.log("redirecting to verifyEmail");
         return router.push("/signup/verifyemail");
       }
-      router.push("/signup/planform");
-      console.log("redirecting to verifyemail");
+      if (!result.profileCount && result.emailVerified) {
+        console.log("redirecting to planform");
+        return router.push("/signup/planform");
+      }
+      router.push("/profiles");
+      console.log("redirecting to profiles");
       return;
     });
   };

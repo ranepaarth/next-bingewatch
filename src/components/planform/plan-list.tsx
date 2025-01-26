@@ -82,7 +82,7 @@ const PlanList = ({ plans }: { plans: any }) => {
           const res = await result.json();
           //process further request, whatever should happen after request fails
           if (res.isOk) {
-            router.push("/profile");
+            router.push("/profiles");
           } //process further request after
           else {
             alert(res.message);

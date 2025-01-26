@@ -48,7 +48,11 @@ export const loginAction = async (data: LoginFormData) => {
       console.log("---------------");
       console.log("Res getUser: 17", { result });
       console.log("---------------");
-      return { success: true, emailVerified: data.user.email_verified_at };
+      return {
+        success: true,
+        emailVerified: data.user.email_verified_at,
+        profileCount: data.user.profile_count,
+      };
     }
     console.log("---------------------LOGIN RESPONSE-------------------------");
     console.log({ result });
