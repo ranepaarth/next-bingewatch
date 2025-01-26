@@ -42,7 +42,7 @@ export async function getStartedAction(data: { email: string }) {
         domain: DOMAIN,
       });
 
-      return { success: true };
+      return { success: true, user: result?.data };
     }
     const token = await encode({
       secret,
@@ -63,11 +63,11 @@ export async function getStartedAction(data: { email: string }) {
     console.log("-------------");
     console.log({ cookie });
     console.log("-------------");
-    return { success: true };
+    return { success: true, user: null };
   } catch (error) {
     console.log("-------------");
     console.log("Get started action error: ", error);
     console.log("-------------");
-    return { success: false };
+    return { success: false, user: null };
   }
 }

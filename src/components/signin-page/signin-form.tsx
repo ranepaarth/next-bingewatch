@@ -1,21 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import React, { FormEvent } from "react";
+import React, { FC, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import ButtonPrimary from "../reusable/button-primary";
 import Input from "../reusable/custom-input";
+import { loginAction } from "@/server-actions/login-action";
+import { useRouter } from "@/navigation";
 
-const SignInForm = () => {
+type SignInFormProps = {
+  email: string;
+};
+
+const SignInForm: FC<SignInFormProps> = ({ email }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, dirtyFields },
     trigger,
   } = useForm();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleSignIn = (data: any) => {
     console.log("SIGN IN FORM", { data });
+    startTransition(async () => {
+      console.log("LOGIN");
+      const result = await loginAction({ email, password: data?.password });
+      if (!result.success) return;
+      router.push("/profiles");
+      console.log("redirecting to profiles");
+      return;
+    });
   };
 
   return (
@@ -44,12 +60,13 @@ const SignInForm = () => {
               onBlur: () => trigger(),
               onChange: () => trigger(),
               shouldUnregister: true,
+              value: email,
             })}
             errorMessage={errors?.email?.message as string}
             isDirty={!!dirtyFields?.email}
           />
           <Input
-            label="Add a password"
+            label="Enter your password"
             type="password"
             // className="focus-within:border-blue-500"
             {...register("password", {
@@ -63,8 +80,15 @@ const SignInForm = () => {
             })}
             errorMessage={errors?.password?.message as string}
             isDirty={!!dirtyFields?.password}
+            autoFocus={!!email}
           />
-          <ButtonPrimary type="submit">Sign In</ButtonPrimary>
+          <ButtonPrimary
+            type="submit"
+            disabled={isPending}
+            className="disabled:bg-primary-800"
+          >
+            Sign In
+          </ButtonPrimary>
         </form>
         <p className="text-center text-xl text-neutral-400 py-4">OR</p>
         <button className="bg-neutral-600/70 w-full py-2 rounded-sm hover:bg-neutral-700/70 transition-colors duration-150 ease-in-out">
